@@ -30,23 +30,17 @@ public class PuzzleManager : MonoBehaviour
 
     void LoadPuzzleGameObjects(PuzzleID puzzleID)
     {
-        if (puzzleStorage != null)
+        List<GameObject> puzzles = puzzleStorage.GetPuzzle(puzzleID);
+        if (puzzles != null)
         {
-            List<GameObject> puzzles = puzzleStorage.GetPuzzle(puzzleID);
-            if (puzzles != null)
-            {
-                puzzleGameObjects = new List<GameObject>(puzzles);
-                Shuffle(puzzleGameObjects); 
-            }
-
-            else
-            {
-                Debug.LogWarning("Puzzle not found for ID: " + puzzleID);
-            }
+            // 기존의 리스트에 새로운 퍼즐 리스트를 추가합니다.
+            puzzleGameObjects.AddRange(puzzles);
+            // 전체 리스트를 섞습니다.
+            Shuffle(puzzleGameObjects); 
         }
         else
         {
-            Debug.LogError("PuzzleStorage not assigned in PuzzleUIManager");
+            Debug.LogWarning("Puzzle not found for ID: " + puzzleID);
         }
 
         AssignPuzzle();
@@ -68,49 +62,23 @@ public class PuzzleManager : MonoBehaviour
 
     private void AssignPuzzle()
     {
+        
+
         foreach (GameObject puzzleGameObject in puzzleGameObjects)
         {
-            GameObject instantiatedPuzzle = Instantiate(puzzle, transform);
-            
-            Image puzzleImage = instantiatedPuzzle.transform.GetChild(0).GetComponent<Image>();
-            SpriteRenderer puzzleSpriteRenderer = puzzleGameObject.GetComponent<SpriteRenderer>();
+            GameObject puzzleParentInstance = Instantiate(puzzle, this.transform.position, Quaternion.identity, this.transform);
+            // 퍼즐 게임 오브젝트의 복사본을 생성하고, 위치와 회전을 원본과 동일하게 설정
+            GameObject puzzleInstance = Instantiate(puzzleGameObject, puzzleGameObject.transform.position, puzzleGameObject.transform.rotation);
 
-            if (puzzleSpriteRenderer != null && puzzleImage != null)
-            {
-                puzzleImage.sprite = puzzleSpriteRenderer.sprite;
-                puzzleImage.SetNativeSize();
+            // 생성된 퍼즐 인스턴스를 'puzzleParentInstance'의 자식으로 설정
+            puzzleInstance.transform.SetParent(puzzleParentInstance.transform, false);
 
-                RectTransform rectTransform = puzzleImage.rectTransform;
-                float maxWidthOrHeight = 120f;
-                float width = rectTransform.sizeDelta.x;
-                float height = rectTransform.sizeDelta.y;
-
-                if (width > maxWidthOrHeight || height > maxWidthOrHeight)
-                {
-                    float aspectRatio = width / height;
-                    if (width > height)
-                    {
-                        rectTransform.sizeDelta = new Vector2(maxWidthOrHeight, maxWidthOrHeight / aspectRatio);
-                    }
-                    else
-                    {
-                        rectTransform.sizeDelta = new Vector2(maxWidthOrHeight * aspectRatio, maxWidthOrHeight);
-                    }
-                }
-            }
-
-            Puzzle puzzleUIComponent = instantiatedPuzzle.transform.GetChild(0).GetComponent<Puzzle>();
-            if (puzzleUIComponent != null)
-            {
-                puzzleUIComponent.SetPuzzle(puzzleGameObject);
-            }
+            // 필요에 따라 puzzleInstance의 localPosition, localScale 등을 조정
+            puzzleInstance.transform.localPosition = Vector3.zero; 
+            // puzzleInstance.transform.localScale = Vector3.one; 등으로 설정 가능
         }
     }
-
-    public void InstantiatePuzzle(GameObject puzzle)
-    {
-        Instantiate(puzzle,puzzleTransform);
-    }
+        
 
 
 
