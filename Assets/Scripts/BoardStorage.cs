@@ -7,6 +7,26 @@ public enum BoardID
 {
     Board_0,
     Board_1,
+    Board_2,
+    Board_3,
+    Board_4,
+    Board_5,
+    Board_6,
+    Board_7,
+    Board_8,
+    Board_9,
+    Board_10,
+    Board_11,
+    Board_12,
+    Board_13,
+    Board_14,
+    Board_15,
+    Board_16,
+    Board_17,
+    Board_18,
+    Board_19,
+    Board_20,
+
     
 }
 
