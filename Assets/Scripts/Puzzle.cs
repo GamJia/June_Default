@@ -53,10 +53,9 @@ public class Puzzle : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             {
                 transform.parent.gameObject.SetActive(false);
             }
-            PuzzleBoard targetBoard = PuzzleBoard.FindBoardByBoardID(boardID);
+            Board targetBoard = Board.FindBoardByBoardID(boardID);
             if (targetBoard != null)
-            {
-                // CorrectPuzzle 메서드를 호출하여 퍼즐 조각을 올바른 보드에 알립니다.
+            {                
                 targetBoard.CorrectPuzzle(this.gameObject, originalPosition);
             }
             
@@ -71,6 +70,7 @@ public class Puzzle : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         }
 
     }
+    
 
 
     
