@@ -26,8 +26,6 @@ public enum BoardID
     Board_18,
     Board_19,
     Board_20,
-
-    
 }
 
 [CreateAssetMenu(fileName = "BoardStorage", menuName = "Puzzle/Board Storage")]
@@ -54,7 +52,7 @@ public class BoardStorage : ScriptableObject
     {
         for (int i = 0; i < boardArray.Length; i++)
         {
-            boardDictionary.Add(boardArray[i].boardID, boardArray[i].boardList);
+            boardDictionary.Add(boardArray[i].boardID, boardArray[i].puzzleList);
         }
     }
 
@@ -71,29 +69,21 @@ public class BoardStorage : ScriptableObject
         {
             return boardDictionary[id];
         }
+
         else
         {
             return null;
         }
     }
 
-    public List<GameObject> GetAllPuzzles()
-    {
-        List<GameObject> allPuzzles = new List<GameObject>();
-        foreach (BoardArray board in boardArray)
-        {
-            allPuzzles.AddRange(board.boardList);
-        }
-        return allPuzzles;
-    }
 }
 
 [Serializable]
 public struct BoardArray 
 {
     [SerializeField] BoardID _boardID; 
-    [SerializeField] List<GameObject> _boardList; 
+    [SerializeField] List<GameObject> _puzzleList; 
 
     public BoardID boardID { get { return _boardID; } } 
-    public List<GameObject> boardList { get { return _boardList; } } 
+    public List<GameObject> puzzleList { get { return _puzzleList; } } 
 }

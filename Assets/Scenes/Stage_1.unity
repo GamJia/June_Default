@@ -549,10 +549,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44ca119222a70246875cd3426a4d120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzle: {fileID: 3943591041288538351, guid: 0b52d20c252b3184fa62316c5a9218fc, type: 3}
+  puzzleGameObject: {fileID: 3943591041288538351, guid: 0b52d20c252b3184fa62316c5a9218fc, type: 3}
   boardStorage: {fileID: 11400000, guid: f3c4cfbaf9aa1ba428ca9d15ac61a0be, type: 2}
-  groupStorage: {fileID: 0}
-  puzzleGameObjects: []
+  groupStorage: {fileID: 11400000, guid: ab46d06ba541c664c92fdb0aa9def857, type: 2}
+  groupID: 0
+  boards: []
+  puzzles: []
 --- !u!1 &651677093
 GameObject:
   m_ObjectHideFlags: 0

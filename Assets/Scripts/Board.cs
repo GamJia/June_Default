@@ -6,8 +6,7 @@ public class Board : MonoBehaviour
 {
     public Vector2 currentPosition;
     private RectTransform rectTransform;
-    [SerializeField] private BoardID boardID;
-    [SerializeField] private int puzzleNum;
+    public BoardID boardID;
     public bool IsPuzzleComplete { get; private set; }
     void Awake()
     {
@@ -16,26 +15,14 @@ public class Board : MonoBehaviour
         {
             currentPosition = rectTransform.anchoredPosition;
         }
-        CountPuzzle();
     }
 
-    void Start()
+    public List<GameObject> GetPuzzles()
     {
-        
+        List<GameObject> puzzleList = Stage.Instance.boardStorage.GetBoard(boardID);
+        return puzzleList; 
     }
 
-    void CountPuzzle()
-    {
-        List<GameObject> boardList = Stage.Instance.boardStorage.GetBoard(boardID);
-        if (boardList != null)
-        {
-            puzzleNum = boardList.Count;
-        }
-        else
-        {
-            puzzleNum = 0;
-        }
-    }
 
     public void CorrectPuzzle(GameObject puzzle, Vector2 originalPosition)
     {
@@ -55,7 +42,8 @@ public class Board : MonoBehaviour
 
     void CheckPuzzleCompletion()
     {
-        IsPuzzleComplete = transform.childCount.Equals(puzzleNum);
+        List<GameObject> puzzleList = Stage.Instance.boardStorage.GetBoard(boardID);
+        IsPuzzleComplete = transform.childCount.Equals(puzzleList.Count);
         if(IsPuzzleComplete)
         {
             Group targetGroup = GetComponentInParent<Group>();
@@ -80,3 +68,4 @@ public class Board : MonoBehaviour
         return null;
     }
 }
+

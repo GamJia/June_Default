@@ -14,7 +14,7 @@ public class Group : MonoBehaviour
 
     void InstantiateGroupItems()
     {
-        List<GameObject> groupItems = groupStorage.GetGroup(groupID);
+        List<GameObject> groupItems = groupStorage.GetBoards(groupID);
 
         if (groupItems != null)
         {
@@ -39,7 +39,7 @@ public class Group : MonoBehaviour
 
         if (groupID != groupStorage.GetLastGroupID())
         {
-            Stage.Instance.CurrentGroupCompleted();
+            Stage.Instance.GroupCompleted();
         }
 
         else

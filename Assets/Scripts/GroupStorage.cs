@@ -42,13 +42,12 @@ public class GroupStorage : ScriptableObject
     {
         for (int i = 0; i < groupArray.Length; i++)
         {
-            groupDictionary.Add(groupArray[i].groupID, groupArray[i].groupList);
+            groupDictionary.Add(groupArray[i].groupID, groupArray[i].boardList); 
         }
     }
 
-    public List<GameObject> GetGroup(GroupID id) 
+    public List<GameObject> GetBoards(GroupID id) 
     {
-        Debug.Assert(groupArray.Length > 0, "No Group!!"); 
 
         if (groupDictionary.Count.Equals(0))
         {
@@ -65,19 +64,6 @@ public class GroupStorage : ScriptableObject
         }
     }
 
-    public List<GameObject> GetAllBoards(GroupID groupID)
-    {
-        if (groupDictionary.ContainsKey(groupID))
-        {
-            return groupDictionary[groupID];
-        }
-        else
-        {
-            Debug.LogError("GroupID not found: " + groupID);
-            return new List<GameObject>();
-        }
-    }
-
     public GroupID GetLastGroupID()
     {
         if (groupArray.Length.Equals(0))
@@ -88,15 +74,14 @@ public class GroupStorage : ScriptableObject
         int lastIndex = groupArray.Length - 1;
         return groupArray[lastIndex].groupID;
     }
-
 }
 
 [Serializable]
 public struct GroupArray 
 {
     [SerializeField] GroupID _groupID; 
-    [SerializeField] List<GameObject> _groupList; 
+    [SerializeField] List<GameObject> _boardList; 
 
     public GroupID groupID { get { return _groupID; } } 
-    public List<GameObject> groupList { get { return _groupList; } } 
+    public List<GameObject> boardList { get { return _boardList; } } 
 }

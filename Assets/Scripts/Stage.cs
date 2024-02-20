@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class Stage : MonoBehaviour
 {
-    [SerializeField] private GameObject puzzle;
+    [SerializeField] private GameObject puzzleGameObject;
     public BoardStorage boardStorage;
     public GroupStorage groupStorage;
-    [SerializeField] private List<GameObject> puzzleGameObjects = new List<GameObject>();
+    public GroupID groupID= GroupID.Group_0; 
+    [SerializeField] private List<GameObject> boards = new List<GameObject>();
+    [SerializeField] private List<GameObject> puzzles = new List<GameObject>();
 
     public static Stage Instance => instance;
     private static Stage instance;
@@ -19,27 +21,37 @@ public class Stage : MonoBehaviour
         {
             instance = this;
         }
+        
     }
 
     void Start()
     {
-        LoadPuzzleGameObjects();
+        LoadPuzzle();
     }
 
-    void LoadPuzzleGameObjects()
+    void LoadPuzzle()
     {
-        if (boardStorage != null)
+        puzzles.Clear();
+        if(groupStorage != null)
         {
-            puzzleGameObjects = boardStorage.GetAllPuzzles(); 
-            Shuffle(puzzleGameObjects);
+            boards = groupStorage.GetBoards(groupID); 
+            foreach (GameObject boardObject in boards)
+            {
+                Board boardComponent = boardObject.GetComponent<Board>();
+                if (boardComponent != null)
+                {
+                    List<GameObject> boardPuzzles = boardComponent.GetPuzzles(); 
+                    puzzles.AddRange(boardPuzzles);
+                }
+
+            }
+            Shuffle(puzzles);
             AssignPuzzle();
         }
-        else
-        {
-            Debug.LogError("BoardStorage is not set in the PuzzleManager.");
-        }
+
     }
 
+   
     private void Shuffle<T>(List<T> list)
     {
         System.Random random = new System.Random();
@@ -56,10 +68,10 @@ public class Stage : MonoBehaviour
 
     private void AssignPuzzle()
     {
-        foreach (GameObject puzzleGameObject in puzzleGameObjects)
+        foreach (GameObject puzzle in puzzles)
         {
-            GameObject puzzleParentInstance = Instantiate(puzzle, this.transform.position, Quaternion.identity, this.transform);
-            GameObject puzzleInstance = Instantiate(puzzleGameObject, puzzleGameObject.transform.position, puzzleGameObject.transform.rotation);
+            GameObject puzzleParentInstance = Instantiate(puzzleGameObject, this.transform.position, Quaternion.identity, this.transform);
+            GameObject puzzleInstance = Instantiate(puzzle, puzzle.transform.position, puzzle.transform.rotation);
 
             RectTransform puzzleRectTransform = puzzleInstance.GetComponent<RectTransform>();
             if (puzzleRectTransform != null)
@@ -88,14 +100,15 @@ public class Stage : MonoBehaviour
         }
     }
 
-    public void CurrentGroupCompleted()
+    public void GroupCompleted()
     {
-
+        groupID++; 
+        LoadPuzzle();
     }
 
     public void StageCompleted()
     {
-        
+
     }
 
     

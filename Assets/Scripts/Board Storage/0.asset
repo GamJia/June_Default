@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardArray:
   - _boardID: 0
-    _boardList:
+    _puzzleList:
     - {fileID: 781983189316586126, guid: f71f37abbe250154e80b2d3b603415fe, type: 3}
     - {fileID: 5346506333710213486, guid: 191c865d0dc2d474dbc411879dae73dc, type: 3}
     - {fileID: 1234158990875198313, guid: f6f0ec9b489b823409524ed17bac48f3, type: 3}
@@ -40,7 +40,7 @@ MonoBehaviour:
     - {fileID: 4253948678370530894, guid: f6e9eb77513ed3c478fd18f0596cc1b2, type: 3}
     - {fileID: 3630221379552227703, guid: a1319ebe344d0f64d987ffce3f4e3a37, type: 3}
   - _boardID: 1
-    _boardList:
+    _puzzleList:
     - {fileID: 3001320458133848002, guid: 37fa58a252dc0b641abf0e564d6413f1, type: 3}
     - {fileID: 5338852589889071258, guid: e3b5b3d0cdee33b4582b89c40587e9a0, type: 3}
     - {fileID: 1585452478999823040, guid: 717f1f3b97b28c946a51aa0e7ed45464, type: 3}
